@@ -1,4 +1,4 @@
-import logo from '../assets/react.svg'
+import logo from '../assets/parking2.svg'
 import background from '../assets/background.png'
 import '../styles/MainPage.css'
 
