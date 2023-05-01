@@ -1,0 +1,99 @@
+.navBar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(25,23,49,255);
+    width: 100%;
+    margin: 0;
+    font-size: large;
+    color: white;
+}
+
+.brand{
+    display: inline-flex;
+    align-items: center;
+}
+
+.brand label{
+    font-size: 1.8em;
+}
+
+.navOptions{    
+    display: inline-flex;
+    gap: 5em;
+    align-items: center;
+    justify-content: flex-start;
+    list-style: None;
+    margin-right: 3em;
+}
+
+.navOptions a{
+    transition: background-color 0.2s ease-in-out;
+    padding: 1em;
+    border-radius: 30px;
+}
+
+.navOptions a:hover{
+    cursor: pointer;
+    background-color: rgba(60,162,218,255);
+}
+
+.logo {
+    height: 4em;
+    padding: 1.5em;
+    will-change: filter;
+    transition: filter 300ms;
+}
+
+.logo:hover {
+    filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+.mainContent{
+    display: flex;
+    width: auto;
+    height: auto;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.infoDialog{
+    background-color: white;
+    border-radius: 40px;
+    color: black;
+    text-align: center;
+    padding: 4em;
+    position: absolute;
+    width: 60%;
+}
+
+.infoDialog h1{
+    font-size: xxx-large;
+}
+
+.parkingButton{
+    background-color: rgba(25,23,49,255);
+    padding: 1em;
+    width: 50%;
+    font-size: x-large;
+    border-radius: 25px;
+    border: none;
+    color: white;
+}
+
+.parkingButton:hover{
+    cursor: pointer;
+}
+
+.infoDialog p{
+    padding-top: 2em;
+    font-size: large;
+}
+
+.backgroundImage{
+    /* visibility: hidden; */
+    width: 100%;
+    height: fit-content;
+}
+
