@@ -99,6 +99,12 @@
     height: fit-content;
 }
 
+footer{
+    background-color: rgba(25,23,49,255);
+    padding: 0.1em;
+    text-align: center;
+}
+
 @media (max-width: 999px){
     .infoDialog h1{
         font-size: 2em;
@@ -118,11 +124,19 @@
         display: none;
     }.mainContent{
         display: block;
+    }.backgroundImage{
+        display: block;
     }.infoDialog{
         width: 100%;
         border-radius: 0px;
         padding: 0px;
+        position: static;
     }.infoDialog *{
-        margin: 10px;
+        margin: 0px;
+        padding: 12px;
+    }.infoDialog h1, .infoDialog p{
+        padding: 18px;
+    }footer{
+        display: block;
     }
 }

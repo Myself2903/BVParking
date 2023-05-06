@@ -27,6 +27,9 @@ const MainPage = ()=>{
                     <p>Conoce la disponibilidad del parqueadero del Centro Comercial BellaVista</p>
                 </div>
             </section>
+            <footer>
+                <p>&copy; 2023 BVParking. All rights reserved</p>
+            </footer>
         </>
     )
 }
