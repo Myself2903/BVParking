@@ -75,6 +75,7 @@
 }
 
 .parkingButton{
+    transition: background-color 0.2s ease-in-out;
     background-color: rgba(25,23,49,255);
     padding: 1em;
     margin-bottom: 0.5em;
@@ -86,6 +87,7 @@
 
 .parkingButton:hover{
     cursor: pointer;
+    background-color: rgba(60,162,218,255);
 }
 
 .infoDialog p{
