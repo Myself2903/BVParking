@@ -1,13 +1,14 @@
 import Footer from "../common/Footer"
 import Navbar from "../common/Navbar"
 import PUC from "../assets/puc.jpg"
-import '../styles/ParkingMap.css'
+import '../styles/PQR.css'
 
-const ParkingMap = ()=>{
+const PQR = ()=>{
     return (
         <>
             <Navbar/>
-            <section className="parkingMap">
+            <h1 className="title">PQR</h1>
+            <section className="pqr">
                 <img src={PUC} alt="page under construction" className='puc'/>
             </section>
             <Footer/>
@@ -15,4 +16,4 @@ const ParkingMap = ()=>{
     )
 }
 
-export default ParkingMap
+export default PQR

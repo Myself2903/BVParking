@@ -1,6 +1,8 @@
 import Logo from "../assets/parking2.svg";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   return (
     <header>
         <nav className='navBar'>
@@ -10,9 +12,9 @@ const Navbar = () => {
             </div>
                     
             <ul className='navOptions'>
-                <li><a>Página Principal</a></li>
-                <li><a>Mapa de Parqueo</a></li>
-                <li><a>PQR</a></li>
+                <li><a onClick={()=>navigate("/")}>Página Principal</a></li>
+                <li><a onClick={()=>navigate("/mapa-de-parqueo")}>Mapa de Parqueo</a></li>
+                <li><a onClick={()=>navigate("/pqr")}>PQR</a></li>
             </ul>
         </nav>
     </header>
