@@ -1,14 +1,14 @@
-.navBar{
-    display: flex;
-    /* position: fixed; */
-    align-items: center;
-    justify-content: space-between;
-    background-color: rgba(25,23,49,255);
+header{
     width: 100%;
-    margin: 0;
-    font-size: large;
-    color: white;
-    z-index: 2;
+    background-color: rgba(25,23,49,255);
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navBar{
+    margin: 10px;
 }
 
 .brand{
@@ -20,8 +20,18 @@
     font-size: 1.4em;
 }
 
+.menuButton{
+    display: none;
+    background-color: rgba(25,23,49,255);
+    border: none;
+}
+
+.svgMenu{
+    width: 2.6em;
+    height: 2.6em;
+}
+
 .navOptions{    
-    min-width: 40em;
     display: inline-flex;
     gap: 2em;
     align-items: center;
@@ -70,7 +80,6 @@
     padding: 0.8em;
     position: absolute;
     width: 60%;
-    top: 5em;
 }
 
 .infoDialog h1{
@@ -125,9 +134,7 @@ footer{
     }
 }
 @media (max-width: 680px){
-    .navOptions{
-        display: none;
-    }.mainContent{
+    .mainContent{
         display: block;
     }.backgroundImage{
         display: block;
@@ -143,5 +150,37 @@ footer{
         padding: 18px;
     }footer{
         display: block;
+    }.menuButton{
+        display: flex;
+        margin-right: 10px;
+    }.navBar{
+        margin: 0px;
+        width: 100%;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        align-items: center;
+        height: 0vh;
+        opacity: 0;
+        overflow: hidden;
+        transition: all .5s ease;
+    }.navBar.isActive{
+        height: 25vh;
+        opacity: 1;
+    }.navOptions{
+        width: 100%;
+        flex-direction: column;
+        margin: 0px;
+        padding: 0px;
+        gap: 0px;
+    }.navOptions a{
+        text-align: center;
+        width: 100%;
+    }.navOptions li{
+        border-top: 1px solid rgb(54, 54, 54);
+        display: flex;
+        width: 95%;
+    }.navOptions a:hover{
+        background-color: rgba(25,23,49,255);
     }
 }
