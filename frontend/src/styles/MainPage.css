@@ -29,6 +29,7 @@ header{
 .svgMenu{
     width: 2.6em;
     height: 2.6em;
+    fill: white;
 }
 
 .navOptions{    
@@ -182,5 +183,6 @@ footer{
         width: 95%;
     }.navOptions a:hover{
         background-color: rgba(25,23,49,255);
+        color: rgba(60,162,218,255);
     }
 }

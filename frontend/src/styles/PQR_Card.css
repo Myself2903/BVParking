@@ -1,0 +1,33 @@
+.PQRcard *{
+    margin: 0px;
+}
+.PQRcard{
+    width: 90%;
+    display: flex;
+    margin: 0px 20px 20px 20px;
+    align-items: center;
+}
+.question-svg{
+    fill: black;
+    width: 12%;
+    height: 100%;
+}
+.infoPQR{
+    width: 88%;
+    color: black;
+    background-color: #BAE3FA;
+}
+.infoPQR h2{
+    margin: 10px 10px;
+}
+.infoPQR p{
+    margin: 10px 20px
+}
+
+@media (max-width:680px){
+    .infoPQR h2{
+        font-size: 19px;
+    }.infoPQR p{
+        font-size: 15px;
+    }
+}

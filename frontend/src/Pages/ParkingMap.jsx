@@ -7,6 +7,7 @@ const ParkingMap = ()=>{
     return (
         <>
             <Navbar/>
+            <h1 className="title">Mapa del parqueadero</h1>
             <section className="parkingMap">
                 <img src={PUC} alt="page under construction" className='puc'/>
             </section>

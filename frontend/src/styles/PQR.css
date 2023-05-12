@@ -1,6 +1,5 @@
 .pqr{
     background-color: #f6f6f6;
-    display: flex;
     justify-content: center;
 }
 .puc{
@@ -13,4 +12,15 @@
     color: black;
     margin: 0px;
     padding: 20px;
+}
+.addButton{
+    display: flex;
+    width: 170px;
+    border-radius: 20px;
+    align-items: center;
+    justify-content: center;
+}
+.plus-svg{
+    width: 20%;
+    height: 20%;
 }
