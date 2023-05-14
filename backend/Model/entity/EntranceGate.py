@@ -35,7 +35,7 @@ class EntranceGate():
             
             if self.detectVehicle:
                 qr = qrcode.make(ticket)
-                qr.save(f"./QR/{idVehicle}.png", "wb")
+                qr.save(f"./Model/Emulation/QR/{idVehicle}.png", "wb")
                 self.openGate()
             
         except Exception as e:

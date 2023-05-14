@@ -1,13 +1,9 @@
+from pydantic import BaseModel
 
-class Block:
+class Block(BaseModel):
     idBlock: int
     type: str
     parking_zone: list[bool]
-
-    def __init__(self, idBlock, type, nZone):
-        self.idBlock = idBlock
-        self.type = type
-        self.parking_zone = [True for i in range(nZone) ]
 
     def getZones(self, isAvaileable):
         availeable_zone = []

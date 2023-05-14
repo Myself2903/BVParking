@@ -1,8 +1,8 @@
-from Block import Block
-from time import sleep
-from EntranceGate import EntranceGate
-from ExitGate import ExitGate 
+from Model.entity.Block import Block
+from Model.entity.EntranceGate import EntranceGate
+from Model.entity.ExitGate import ExitGate 
 from pyzbar import pyzbar
+from time import sleep
 import cv2
 import random 
 import os
@@ -36,11 +36,11 @@ class Vehicle:
         gate.isDetectingVehicle("")
         return self.goToParkingZone(self.type, blocks)
     
-    def chooseBlock(self, blocks: list[Block], vehicleType:str ,areAvaileable: bool):
+    def chooseBlock(self, blocks: dict, vehicleType:str ,areAvaileable: bool):
         blocksMatching = []
         matchZoneCondition = False
         
-        for block in blocks:
+        for block in blocks.values():
             zones = block.getZonesType(vehicleType, areAvaileable)
             # print(block.idBlock)
             if len(zones) != 0:
@@ -56,7 +56,7 @@ class Vehicle:
     
 
     def goToParkingZone(self, type: str, blocks: list[Block]):
-        if os.path.exists(f"./QR/{self.idVehicle}.png"):
+        if os.path.exists(f"./Model/Emulation/QR/{self.idVehicle}.png"):
             choosed_space = self.chooseBlock(blocks, type, True)
 
             if choosed_space == (-1,-1):
@@ -76,7 +76,7 @@ class Vehicle:
         print('el vehiculo no ha ingresado al parking')
 
     def leaveParkingZone(self, ticket: str, blocks):
-        qrImg = cv2.imread(f'./QR/{ticket}')
+        qrImg = cv2.imread(f'./Model/Emulation/QR/{ticket}')
         gray = cv2.cvtColor(qrImg, cv2.COLOR_BGR2GRAY)
         qr_codes = pyzbar.decode(gray)
 

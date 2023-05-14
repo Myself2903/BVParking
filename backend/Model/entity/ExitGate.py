@@ -22,7 +22,7 @@ class ExitGate():
 
     def readTicket(self, ticket:str, current_vehicle: dict):
         try:
-            qrImg = cv2.imread(f'./QR/{ticket}')
+            qrImg = cv2.imread(f'./Model/Emulation/QR/{ticket}')
             gray = cv2.cvtColor(qrImg, cv2.COLOR_BGR2GRAY)
             qr_codes = pyzbar.decode(gray)
 
@@ -38,7 +38,7 @@ class ExitGate():
                 current_vehicle["type"] == ticketData["type"]
             ):                
                 self.openGate()
-                remove(f'./QR/{ticket}')
+                remove(f'./Model/Emulation/QR/{ticket}')
                 
         except Exception as e:
             self.closeGate()
