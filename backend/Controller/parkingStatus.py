@@ -1,4 +1,5 @@
-from fastapi import APIRouter, WebSocket
+from fastapi import APIRouter, Request
+from sse_starlette.sse import EventSourceResponse, ServerSentEvent
 import asyncio
 from Model.Emulation.Emulation import Emulation
 from Model.entity.Block import Block
@@ -21,12 +22,10 @@ def emulate():
     n = 5
     blocks = {i: Block(idBlock = i, type = types[0], parking_zone = [True for _ in range(n)]) for i in range(5)}
     blocks[n] = Block(idBlock = n, type = types[1], parking_zone = [True for _ in range(n)])
-    # print(blocks)
     emulation = Emulation(blocks, types)
     
     while not shutdown_event.is_set():
         blocks = emulation.flowEmulation()
-        # print(blocks)
         time.sleep(5)
 
     print("\033[32mINFO\033[0m:     Emulation stopped")
@@ -50,22 +49,19 @@ async def startupEmulation():
 @router.on_event("shutdown")
 async def stopEmulation():
     shutdown_event.set()  # Establecer el evento de finalización
-    if thread is not None:
+    if thread is not None:  
         thread.join()
 
-@router.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket):
-    await websocket.accept()
-    clients.append(websocket)
-
-    try:
+@router.get("/parkingStatus")
+async def sse_endpoint(request: Request):
+    async def event_generator():
+        client = request.scope["client"]  # Obtener información del cliente actual
+        clients.append(client) 
         while not shutdown_event.is_set():
             global blocks
             serialized_blocks = {str(block_id): block.dict() for block_id, block in blocks.items()}
-            await websocket.send_json(serialized_blocks)
+            event = ServerSentEvent(data=json.dumps(serialized_blocks))
+            yield event
             await asyncio.sleep(1)
-    except Exception as e:
-        print(f"WebSocket error: {e}")
-    finally:
-        clients.remove(websocket)
-        await websocket.close()
+
+    return EventSourceResponse(event_generator())

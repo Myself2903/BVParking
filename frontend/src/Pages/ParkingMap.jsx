@@ -7,26 +7,40 @@ import { w3cwebsocket as W3CWebSocket } from 'websocket';
 
 const ParkingMap = ()=>{
     const [parkingState, setParkingState] = useState([])
-    // const URL = '127.0.0.1:8000'
-    const client = new W3CWebSocket('ws://localhost:8000/ws');
+    const URL = 'http://127.0.0.1:8000/parkingStatus'
+    // const client = new W3CWebSocket('ws://localhost:8000/ws');
+
+    // useEffect(() =>{
+    //     client.onopen = () => console.log('WebSocket connection established')
+    //     client.onmessage = message => {
+    //         const data = JSON.parse(message.data);
+    //         console.log(data)
+    //         setParkingState(data);
+    //     }
+    //     client.onerror = (error) => {
+    //         console.error("WebSocket error:", error);
+    //     };
+    //     client.onclose = () => {
+    //         console.log("WebSocket connection closed");
+    //         // Realizar cualquier otra acción necesaria después de cerrar la conexión
+    //     }
+        
+    //     return () => client.close()
+    // }, [])
 
     useEffect(() =>{
-        client.onopen = () => console.log('WebSocket connection established')
-        client.onmessage = message => {
-            const data = JSON.parse(message.data);
-            console.log(data)
+        const eventSource = new EventSource(URL)
+        console.log(eventSource.readyState)
+
+        eventSource.onmessage = event => {
+            const data = JSON.parse(event.data);
             setParkingState(data);
-        }
-        client.onerror = (error) => {
-            console.error("WebSocket error:", error);
+          };
+
+        return () => {
+            eventSource.close(); // Cerrar la conexión SSE al desmontar el componente
         };
-        client.onclose = () => {
-            console.log("WebSocket connection closed");
-            // Realizar cualquier otra acción necesaria después de cerrar la conexión
-        }
-        
-        return () => client.close()
-    }, [])
+    }, []);
 
     return (
         <>
@@ -41,7 +55,7 @@ const ParkingMap = ()=>{
                         <div key={blockId}>
                             Block ID: {blockId}<br />
                             Type: {parkingState[blockId].type}<br />
-                            Capacity: {parkingState[blockId].parking_zone[0] ? "mondongo" : "eche"}<br />
+                            Capacity: {parkingState[blockId].parking_zone ? "mondongo" : "eche"}<br />
                             <br />
                         </div>
                     ))}
