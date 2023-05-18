@@ -30,6 +30,7 @@
 }
 .addButton:hover{
     background-color: rgba(60,162,218,255);
+    cursor: pointer;
 }
 .plus-svg{
     width: 25px;

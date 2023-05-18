@@ -13,6 +13,7 @@
 }
 .goBackButton:hover{
     background-color: rgba(60,162,218,255);
+    cursor: pointer;
 }
 .arrow-svg{
     width: 25px;
@@ -63,6 +64,9 @@
     height: 20px;
     border-color: black;
 }
+.form-div>div input:hover{
+    cursor: pointer;
+}
 .buttoms{
     margin: 30px;
     display: flex;
@@ -76,10 +80,20 @@
     border: none;
 }
 .submitButton{
+    transition: background-color 0.2s ease-in-out;
     background-color: #121023;
 }
+.submitButton:hover{
+    cursor: pointer;
+    background-color: rgba(60,162,218,255);
+}
 .cancelButton{
+    transition: background-color 0.2s ease-in-out;
     background-color: #BC0000;
+}
+.cancelButton:hover{
+    cursor: pointer;
+    background-color: #880000;
 }
 @media (max-width:680px){
     .goBackButton{

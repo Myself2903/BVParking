@@ -4,6 +4,7 @@ import MainPage from './Pages/MainPage'
 import ParkingMap from './Pages/ParkingMap'
 import PQR from './Pages/PQR'
 import CreatePQR from './Pages/CreatePQR'
+import ParkingBlock from './Pages/ParkingBlock'
 
 function App() {
   return (
@@ -13,8 +14,12 @@ function App() {
         element = {<MainPage/>}
       />
       <Route 
-        path = "/mapa-de-parqueo"
-        element = {<ParkingMap/>}
+        path = "/mapa-de-parqueo/*"
+        element = {
+          <Routes>
+          <Route path="bloque-E" element={<ParkingBlock/>}/>
+          <Route path="/" element={<ParkingMap/>}/>
+        </Routes>}
       />
       <Route 
         path = "/pqr/*"

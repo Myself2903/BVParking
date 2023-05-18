@@ -1,13 +1,14 @@
 import Footer from "../common/Footer"
 import Navbar from "../common/Navbar"
-import PUC from "../assets/puc.jpg"
+import ParkingBlock from "../assets/parking-map-block.png"
 import '../styles/ParkingMap.css'
 import { useState, useEffect } from "react"
-import { w3cwebsocket as W3CWebSocket } from 'websocket';
+import { useNavigate } from "react-router-dom"
 
 const ParkingMap = ()=>{
     const [parkingState, setParkingState] = useState([])
     const URL = 'http://127.0.0.1:8000/parkingStatus'
+    const navigate = useNavigate()
     // const client = new W3CWebSocket('ws://localhost:8000/ws');
 
     // useEffect(() =>{
@@ -46,8 +47,9 @@ const ParkingMap = ()=>{
         <>
             <Navbar/>
             <h1 className="title">Mapa del parqueadero</h1>
+            <div onClick={()=>navigate("/mapa-de-parqueo/bloque-E")} className="blockE"></div>
             <section className="parkingMap">
-                <img src={PUC} alt="page under construction" className='puc'/>
+                <img src={ParkingBlock} alt="page under construction" className='parkingBlock'/>
             </section>
             <div className="parking">
                 <p>data:</p>

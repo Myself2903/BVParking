@@ -1,0 +1,10 @@
+.parkingB{
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.parkingPlace{
+    width: 90%;
+    margin: 0px;
+}
