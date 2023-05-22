@@ -47,9 +47,29 @@ const ParkingMap = ()=>{
         <>
             <Navbar/>
             <h1 className="title">Mapa del parqueadero</h1>
-            <div onClick={()=>navigate("/mapa-de-parqueo/bloque-E")} className="blockE"></div>
             <section className="parkingMap">
                 <img src={ParkingBlock} alt="page under construction" className='parkingBlock'/>
+                <div onClick={()=>navigate("/mapa-de-parqueo/bloque")} className="blocks blockF">
+                    <p>F</p>
+                </div>
+                <div onClick={()=>navigate("/mapa-de-parqueo/bloque")} className="blocks blockE">
+                    <p>E</p>
+                </div>
+                <div onClick={()=>navigate("/mapa-de-parqueo/bloque")} className="blocks blockD">
+                    <p>D</p>
+                </div>
+                <div onClick={()=>navigate("/mapa-de-parqueo/bloque")} className="blocks blockC">
+                    <p>C</p>
+                </div>
+                <div onClick={()=>navigate("/mapa-de-parqueo/bloque")} className="blocks blockB">
+                    <p>B</p>
+                </div>
+                <div onClick={()=>navigate("/mapa-de-parqueo/bloque")} className="blocks blockA">
+                    <p>A</p>
+                </div>
+                <div onClick={()=>navigate("/mapa-de-parqueo/bloque")} className="blocks blockMoto">
+                    <p>Moto</p>
+                </div>
             </section>
             <div className="parking">
                 <p>data:</p>

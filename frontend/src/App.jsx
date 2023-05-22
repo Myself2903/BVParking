@@ -17,7 +17,7 @@ function App() {
         path = "/mapa-de-parqueo/*"
         element = {
           <Routes>
-          <Route path="bloque-E" element={<ParkingBlock/>}/>
+          <Route path="bloque" element={<ParkingBlock/>}/>
           <Route path="/" element={<ParkingMap/>}/>
         </Routes>}
       />

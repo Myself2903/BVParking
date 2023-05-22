@@ -1,8 +1,27 @@
 import Footer from "../common/Footer";
 import Navbar from "../common/Navbar";
-import ParkingPlace from "../assets/parking-map-place.png";
+import ParkingPlace from "../assets/parking-map-place-horizontal.png";
+import ParkingPlaceVertical from "../assets/parking-map-place-vertical.png"
 import { useNavigate } from "react-router-dom";
 import '../styles/ParkingBlock.css'
+
+const getDivPlace = () =>{
+    let n=16
+    let divs = []
+    for(let i = 1;i<=n;i++){
+        if(i<=n/2){
+            divs.push((
+                <div id={"place"+i} className="places up"></div>
+            ))
+        }else{
+            divs.push((
+                <div id={"place"+i} className="places down"></div>
+            ))
+        }
+        
+    }
+    return divs
+}
 
 const ParkingBlock = () =>{
     const navigate = useNavigate()
@@ -17,7 +36,9 @@ const ParkingBlock = () =>{
             </button>
             <h1 className="title">Bloque E</h1>
             <section className="parkingB">
-                <img src={ParkingPlace} alt="page under construction" className='parkingPlace'/>
+                <img src={ParkingPlace} alt="imagen de las plazas en el bloque" className='parkingPlace'/>
+                <img src={ParkingPlaceVertical} alt="imagen de las plazas en el bloque en vertical" className='parkingPlaceVertical'/>
+                {getDivPlace()}
             </section>
             <div>
                 

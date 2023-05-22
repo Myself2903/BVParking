@@ -1,23 +1,64 @@
 .parkingMap{
     background-color: white;
     display: flex;
+    position: relative;
     justify-content: center;
 }
 .parkingBlock{
     width: 90%;
     margin: 0px;
 }
-.blockE{
-    background-color: rgba(0, 0, 0, 0);
-    width: 358px;
-    height: 145px;
-    position: absolute;
-    right: 110px;
-    top: 685px;
-}
-.blockE:hover{
+.blocks{
     cursor: pointer;
+    width: 25.3%;
+    height: 9%;
+    position: absolute;
+    right: 8%;
+    border: 9px solid black;   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px;
+}
+.blocks p{
+    color: black;
+    margin: 0px;
+    font-size: 4em;
+    font-weight: bold;
+}
+.blockF{
+    top: 19.5%;
+    background-color: #d7f4c5;
+}.blockE{
+    top: 29%;  
+    background-color: #d7f4c5;
+}.blockD{
+    top: 38.5%;
+    background-color: #d7f4c5;
+}.blockC{
+    top: 48%;
+    background-color: #ea9c8d;
+}.blockB{
+    top: 57.7%;   
+    background-color: #ea9c8d;
+}.blockA{
+    top: 67.2%;  
+    background-color: #ea9c8d;
+}.blockMoto{
+    height: 12.4%;
+    top: 78%; 
+    background-color: #d7f4c5;
 }
 .parking{
     color: black
+}
+
+@media (max-width:680px){
+    .blocks p{
+        font-size: 2em;
+    }
+}@media (max-width:375px){
+    .blocks p{
+        font-size: 1.2em;
+    }
 }
