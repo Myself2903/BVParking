@@ -19,9 +19,10 @@ def emulate():
     print("\033[32mINFO\033[0m:     Emulation started")
     time.sleep(2)
     types = ["car", "motorcycle"]
-    n = 5
-    blocks = {i: Block(idBlock = i, type = types[0], parking_zone = [True for _ in range(n)]) for i in range(5)}
-    blocks[n] = Block(idBlock = n, type = types[1], parking_zone = [True for _ in range(n)])
+    nParkingZones = 16
+    nBlocks = 6
+    blocks = {i: Block(idBlock = i, type = types[0], parking_zone = [True for _ in range(nParkingZones)]) for i in range(nBlocks)}
+    blocks[len(blocks)] = Block(idBlock = len(blocks), type = types[1], parking_zone = [True for _ in range(nParkingZones)])
     emulation = Emulation(blocks, types)
     
     while not shutdown_event.is_set():
@@ -52,16 +53,38 @@ async def stopEmulation():
     if thread is not None:  
         thread.join()
 
-@router.get("/parkingStatus")
-async def sse_endpoint(request: Request):
+@router.get("/blockStatus")
+async def sse_blocksStatus(request: Request):
     async def event_generator():
         client = request.scope["client"]  # Obtener información del cliente actual
         clients.append(client) 
         while not shutdown_event.is_set():
             global blocks
-            serialized_blocks = {str(block_id): block.dict() for block_id, block in blocks.items()}
-            event = ServerSentEvent(data=json.dumps(serialized_blocks))
-            yield event
-            await asyncio.sleep(1)
+            if blocks:
+                availeableBlocks = {}
+                for idblock in blocks:
+                    availeableBlocks[idblock] = True if blocks[idblock].getZones(True) else False
+                event = ServerSentEvent(data=json.dumps(availeableBlocks))
+                yield event
+                await asyncio.sleep(1)
+
+    return EventSourceResponse(event_generator())
+
+@router.get("/parkingStatus")
+async def sse_parkingPlacesStatus(searchedBlock: int,request: Request):
+    async def event_generator():
+        client = request.scope["client"]  # Obtener información del cliente actual
+        clients.append(client) 
+        while not shutdown_event.is_set():
+            global blocks
+            
+            if blocks:
+                availeableZones = {}
+                for i in range(len(blocks[searchedBlock].parking_zone)):
+                    availeableZones[i] = blocks[searchedBlock].parking_zone[i]
+
+                event = ServerSentEvent(data=json.dumps(availeableZones))
+                yield event
+                await asyncio.sleep(1)
 
     return EventSourceResponse(event_generator())

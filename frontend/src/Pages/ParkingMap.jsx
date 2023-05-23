@@ -7,34 +7,16 @@ import { useNavigate } from "react-router-dom"
 
 const ParkingMap = ()=>{
     const [parkingState, setParkingState] = useState([])
-    const URL = 'http://127.0.0.1:8000/parkingStatus'
+    const URL = 'http://127.0.0.1:8000/blockStatus'
     const navigate = useNavigate()
-    // const client = new W3CWebSocket('ws://localhost:8000/ws');
-
-    // useEffect(() =>{
-    //     client.onopen = () => console.log('WebSocket connection established')
-    //     client.onmessage = message => {
-    //         const data = JSON.parse(message.data);
-    //         console.log(data)
-    //         setParkingState(data);
-    //     }
-    //     client.onerror = (error) => {
-    //         console.error("WebSocket error:", error);
-    //     };
-    //     client.onclose = () => {
-    //         console.log("WebSocket connection closed");
-    //         // Realizar cualquier otra acción necesaria después de cerrar la conexión
-    //     }
-        
-    //     return () => client.close()
-    // }, [])
 
     useEffect(() =>{
-        const eventSource = new EventSource(URL)
+        const eventSource = new EventSource(URL);
         console.log(eventSource.readyState)
 
         eventSource.onmessage = event => {
             const data = JSON.parse(event.data);
+            // console.log(data)
             setParkingState(data);
           };
 
@@ -43,45 +25,29 @@ const ParkingMap = ()=>{
         };
     }, []);
 
+    const blocks = {"A": 0, "B": 1, "C": 2, "D":3, "E":4, "F":5, "Moto": 6}
+
+    const genBlocks = () =>{
+        const generatedBlocks = []
+        const keys = Object.keys(blocks)
+        for(let i=0; i<keys.length ; i++){
+            generatedBlocks.push(
+                <div onClick={()=>navigate(`/mapa-de-parqueo/bloque?block=${keys[i]}`)} className= {`blocks block${keys[i]} ${ parkingState[blocks[keys[i]]] ? '' : 'unavaileableBlock'}`}>
+                    <p>{keys[i]}</p>
+                </div>
+            )
+        }
+        return generatedBlocks
+    }
+
     return (
         <>
             <Navbar/>
             <h1 className="title">Mapa del parqueadero</h1>
             <section className="parkingMap">
                 <img src={ParkingBlock} alt="page under construction" className='parkingBlock'/>
-                <div onClick={()=>navigate("/mapa-de-parqueo/bloque")} className="blocks blockF">
-                    <p>F</p>
-                </div>
-                <div onClick={()=>navigate("/mapa-de-parqueo/bloque")} className="blocks blockE">
-                    <p>E</p>
-                </div>
-                <div onClick={()=>navigate("/mapa-de-parqueo/bloque")} className="blocks blockD">
-                    <p>D</p>
-                </div>
-                <div onClick={()=>navigate("/mapa-de-parqueo/bloque")} className="blocks blockC">
-                    <p>C</p>
-                </div>
-                <div onClick={()=>navigate("/mapa-de-parqueo/bloque")} className="blocks blockB">
-                    <p>B</p>
-                </div>
-                <div onClick={()=>navigate("/mapa-de-parqueo/bloque")} className="blocks blockA">
-                    <p>A</p>
-                </div>
-                <div onClick={()=>navigate("/mapa-de-parqueo/bloque")} className="blocks blockMoto">
-                    <p>Moto</p>
-                </div>
+                {genBlocks()}
             </section>
-            <div className="parking">
-                <p>data:</p>
-                {Object.keys(parkingState).map((blockId) => (
-                        <div key={blockId}>
-                            Block ID: {blockId}<br />
-                            Type: {parkingState[blockId].type}<br />
-                            Capacity: {parkingState[blockId].parking_zone ? "mondongo" : "eche"}<br />
-                            <br />
-                        </div>
-                    ))}
-            </div>
             <Footer/>
 
         </>

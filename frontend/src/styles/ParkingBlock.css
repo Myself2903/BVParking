@@ -20,6 +20,10 @@
     background-color: #d7f4c5;
     border: 4px solid black;
 }
+.places.unavaileable{
+    background-color: #ea9c8d;
+}
+
 .up{
     border-bottom: none;
     top: 13%;

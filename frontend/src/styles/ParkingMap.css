@@ -8,6 +8,7 @@
     width: 90%;
     margin: 0px;
 }
+
 .blocks{
     cursor: pointer;
     width: 25.3%;
@@ -19,7 +20,14 @@
     justify-content: center;
     align-items: center;
     margin: 0px;
+    background-color: #d7f4c5;
 }
+
+.blocks.unavaileableBlock{
+    background-color: #ea9c8d;
+}
+
+
 .blocks p{
     color: black;
     margin: 0px;
@@ -31,23 +39,17 @@
     background-color: #d7f4c5;
 }.blockE{
     top: 29%;  
-    background-color: #d7f4c5;
 }.blockD{
     top: 38.5%;
-    background-color: #d7f4c5;
 }.blockC{
     top: 48%;
-    background-color: #ea9c8d;
 }.blockB{
     top: 57.7%;   
-    background-color: #ea9c8d;
 }.blockA{
     top: 67.2%;  
-    background-color: #ea9c8d;
 }.blockMoto{
     height: 12.4%;
     top: 78%; 
-    background-color: #d7f4c5;
 }
 .parking{
     color: black

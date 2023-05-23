@@ -1,30 +1,62 @@
 import Footer from "../common/Footer";
 import Navbar from "../common/Navbar";
 import ParkingPlace from "../assets/parking-map-place-horizontal.png";
-import ParkingPlaceVertical from "../assets/parking-map-place-vertical.png"
-import { useNavigate } from "react-router-dom";
-import '../styles/ParkingBlock.css'
+import ParkingPlaceVertical from "../assets/parking-map-place-vertical.png";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import '../styles/ParkingBlock.css';
 
-const getDivPlace = () =>{
-    let n=16
-    let divs = []
-    for(let i = 1;i<=n;i++){
-        if(i<=n/2){
-            divs.push((
-                <div id={"place"+i} className="places up"></div>
-            ))
-        }else{
-            divs.push((
-                <div id={"place"+i} className="places down"></div>
-            ))
-        }
-        
-    }
-    return divs
-}
 
 const ParkingBlock = () =>{
     const navigate = useNavigate()
+    const location = useLocation();
+    const URL = 'http://127.0.0.1:8000/parkingStatus' 
+    const [blockState, setBlockState] = useState([])
+    const blocks = {"A": 0, "B": 1, "C": 2, "D":3, "E":4, "F":5, "Moto": 6}
+    const params = new URLSearchParams(location.search) ;
+    const block = params.get('block')
+
+    useEffect(()=>{    
+
+        if (!block || !(Object.keys(blocks).includes(block))){
+            navigate("/mapa-de-parqueo")
+        }
+
+        const eventSource = new EventSource(`${URL}?searchedBlock=${blocks[block]}`);
+        console.log(eventSource.readyState)
+
+        eventSource.onmessage = event => {
+            const data = JSON.parse(event.data);
+            // console.log(data)
+            setBlockState(data);
+          };
+
+        return () => {
+            eventSource.close(); // Cerrar la conexión SSE al desmontar el componente
+        };
+        
+    }, [])
+    
+    const getDivPlace = () =>{
+        let n=16
+            
+        let divs = []
+        for(let i = 1;i<=n;i++){
+            if(i<=n/2){
+                divs.push((
+                    <div id={"place"+i} className={`places up ${blockState[i] ? '': 'unavaileable'}`}></div>
+                ))
+            }else{
+                divs.push((
+                    <div id={"place"+i} className={`places down ${blockState[i] ? '': 'unavaileable'}`}></div>
+                ))
+            }
+            
+        }
+        return divs
+    }
+    
+
     return (
         <>
             <Navbar/>
@@ -34,7 +66,7 @@ const ParkingBlock = () =>{
                 </svg>
                 <p>Regresar</p>
             </button>
-            <h1 className="title">Bloque E</h1>
+            <h1 className="title">Bloque {block}</h1>
             <section className="parkingB">
                 <img src={ParkingPlace} alt="imagen de las plazas en el bloque" className='parkingPlace'/>
                 <img src={ParkingPlaceVertical} alt="imagen de las plazas en el bloque en vertical" className='parkingPlaceVertical'/>
