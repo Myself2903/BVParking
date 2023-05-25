@@ -27,7 +27,6 @@ const ParkingBlock = () =>{
 
         eventSource.onmessage = event => {
             const data = JSON.parse(event.data);
-            // console.log(data)
             setBlockState(data);
           };
 
@@ -44,11 +43,11 @@ const ParkingBlock = () =>{
         for(let i = 1;i<=n;i++){
             if(i<=n/2){
                 divs.push((
-                    <div id={"place"+i} className={`places up ${blockState[i] ? '': 'unavaileable'}`}></div>
+                    <div id={"place"+i} className={`places up ${blockState[i-1] ? '': 'unavaileable'}`}></div>
                 ))
             }else{
                 divs.push((
-                    <div id={"place"+i} className={`places down ${blockState[i] ? '': 'unavaileable'}`}></div>
+                    <div id={"place"+i} className={`places down ${blockState[i-1] ? '': 'unavaileable'}`}></div>
                 ))
             }
             

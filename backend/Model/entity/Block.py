@@ -1,14 +1,15 @@
 from pydantic import BaseModel
+from .Place import Place
 
 class Block(BaseModel):
     idBlock: int
     type: str
-    parking_zone: list[bool]
+    parking_zone: list[Place]
 
     def getZones(self, isAvaileable):
         availeable_zone = []
         for i in range(len(self.parking_zone)):
-            if isAvaileable == self.parking_zone[i]:
+            if isAvaileable == self.parking_zone[i].status:
                 availeable_zone.append(i)
 
         return availeable_zone
@@ -18,10 +19,17 @@ class Block(BaseModel):
             return self.getZones(isAvaileable)
         return []    
 
-    def parkInZone(self, parking_zone: int):
-        self.parking_zone[parking_zone] = False
-        print(f"el vehiculo se estacionó en el bloque {self.idBlock} en la plaza {parking_zone}" )
-    
-    def leaveZone(self, parking_zone: int):
-        self.parking_zone[parking_zone] = True
-        print(f"se liberó la plaza {parking_zone} en el bloque {self.idBlock}")
+    def parkInZone(self, place: int):
+        for zone in self.parking_zone:
+            if zone.idPlace == place:
+                zone.isDetectingVehicle(True)
+                print(f"el vehiculo se estacionó en el bloque {self.idBlock} en la plaza {place}" )
+                break
+
+        
+    def leaveZone(self, place: int):
+        for zone in self.parking_zone:
+            if zone.idPlace == place:
+                zone.isDetectingVehicle(False)
+                print(f"se liberó la plaza {place} en el bloque {self.idBlock}")
+                break

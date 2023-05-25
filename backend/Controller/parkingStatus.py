@@ -1,10 +1,13 @@
 from fastapi import APIRouter, Request
 from sse_starlette.sse import EventSourceResponse, ServerSentEvent
-import asyncio
 from Model.Emulation.Emulation import Emulation
 from Model.entity.Block import Block
+from Model.entity.Place import Place
+import errno
+import asyncio
 import threading
 import os
+import shutil
 import sys
 import time
 import json
@@ -16,13 +19,21 @@ shutdown_event = asyncio.Event()  # Evento para controlar la finalización y cie
 
 def emulate():
     global blocks
+    qrdirectory = "./Model/Emulation/QR" 
+    try:
+        os.mkdir(qrdirectory)
+    except OSError as err:
+        if err.errno == errno.EEXIST:
+            shutil.rmtree(qrdirectory)
+            os.mkdir(qrdirectory)
+
     print("\033[32mINFO\033[0m:     Emulation started")
     time.sleep(2)
     types = ["car", "motorcycle"]
     nParkingZones = 16
     nBlocks = 6
-    blocks = {i: Block(idBlock = i, type = types[0], parking_zone = [True for _ in range(nParkingZones)]) for i in range(nBlocks)}
-    blocks[len(blocks)] = Block(idBlock = len(blocks), type = types[1], parking_zone = [True for _ in range(nParkingZones)])
+    blocks = {i: Block(idBlock = i, type = types[0], parking_zone = [Place(idPlace=j, status=True) for j in range(nParkingZones)]) for i in range(nBlocks)}
+    blocks[len(blocks)] = Block(idBlock = len(blocks), type = types[1], parking_zone = [Place(idPlace=j, status=True) for j in range(nParkingZones)])
     emulation = Emulation(blocks, types)
     
     while not shutdown_event.is_set():
@@ -30,9 +41,7 @@ def emulate():
         time.sleep(5)
 
     print("\033[32mINFO\033[0m:     Emulation stopped")
-    current_tickets = os.listdir("./Model/Emulation/QR")
-    for ticket in current_tickets:
-        os.remove(f'./Model/Emulation/QR/{ticket}')
+    shutil.rmtree(qrdirectory)
     
     sys.exit(0)
 
@@ -64,6 +73,7 @@ async def sse_blocksStatus(request: Request):
                 availeableBlocks = {}
                 for idblock in blocks:
                     availeableBlocks[idblock] = True if blocks[idblock].getZones(True) else False
+                
                 event = ServerSentEvent(data=json.dumps(availeableBlocks))
                 yield event
                 await asyncio.sleep(1)
@@ -81,7 +91,7 @@ async def sse_parkingPlacesStatus(searchedBlock: int,request: Request):
             if blocks:
                 availeableZones = {}
                 for i in range(len(blocks[searchedBlock].parking_zone)):
-                    availeableZones[i] = blocks[searchedBlock].parking_zone[i]
+                    availeableZones[i] = blocks[searchedBlock].parking_zone[i].status
 
                 event = ServerSentEvent(data=json.dumps(availeableZones))
                 yield event
