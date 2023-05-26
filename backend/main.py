@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from Controller.parkingStatus import router as parkingStatus
-
+from Controller.pqr import router as pqr
 
 app = FastAPI()
 
@@ -22,7 +22,7 @@ app.add_middleware(
 )
 
 app.include_router(parkingStatus)
-
+app.include_router(pqr)
 
 @app.get("/")
 def read_root():
