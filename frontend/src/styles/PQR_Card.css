@@ -7,10 +7,10 @@
     margin: 0px 20px 30px 20px;
     align-items: center;
 }
-.question-svg{
-    fill: black;
-    width: 12%;
+.image{
+    width: 10%;
     height: 100%;
+    margin-right: 10px;
 }
 .infoPQR{
     width: 88%;

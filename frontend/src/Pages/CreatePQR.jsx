@@ -1,10 +1,31 @@
 import Footer from "../common/Footer"
 import Navbar from "../common/Navbar"
 import {useNavigate} from "react-router-dom"
+import { useState } from "react"
+import axios from 'axios'
 import "../styles/CreatePQR.css"
 
 const CreatePQR= ()=>{
+    const [formData, setFormData] = useState({titulo:'',nombre:'',idTipo:0})
+    const URL = 'http://127.0.0.1:8000/newPQR'
     const navigate = useNavigate();
+
+    const handleSubmit = async e =>{
+        e.preventDefault()
+        try{
+            await axios.post(URL,formData);
+            console.log('POST hecho con EXITO')
+            navigate("/pqr")
+        }catch (error){
+            console.error(error)
+        }
+        console.log(formData)
+    }
+    const handleChange = e =>{
+        const {name,value} = e.target
+        setFormData({...formData,[name]:name=='idTipo' ? parseInt(value) : value})
+        console.log(value)
+    }
     return (
         <>
             <Navbar/>
@@ -16,27 +37,27 @@ const CreatePQR= ()=>{
             </button>
             <h1 className="title">Nueva PQR</h1>
             <section className="newPQR">
-                <form action="">
+                <form onSubmit={handleSubmit}>
                     <div className="form-div">
                         <label htmlFor="title" className="titles">Título:</label>
-                        <input type="text" name="pqr_title" id="title" />
+                        <input type="text" name="titulo" id="title" onChange={handleChange}/>
                     </div>
                     <div className="form-div">
                         <label htmlFor="name" className="titles">Nombre de la persona:</label>
-                        <input type="text" name="pqr_name" id="name" />
+                        <input type="text" name="nombre" id="name" onChange={handleChange}/>
                     </div>
                     <div className="form-div">
                         <p className="titles">Tipo de PQR:</p>
                         <div>
-                            <input type="radio" name="radio-type" id="question" value={1} />
+                            <input type="radio" name="idTipo" id="question" value={1} onChange={handleChange}/>
                             <label htmlFor="question">Pregunta</label>
                         </div>
                         <div>
-                            <input type="radio" name="radio-type" id="suggestion" value={2} />
-                            <label htmlFor="suggestion">Sugerencia</label>
+                            <input type="radio" name="idTipo" id="suggestion" value={3} onChange={handleChange}/>
+                            <label htmlFor="suggestion">Reclamo</label>
                         </div>
                         <div>
-                            <input type="radio" name="radio-type" id="complaint" value={3} />
+                            <input type="radio" name="idTipo" id="complaint" value={2} onChange={handleChange}/>
                             <label htmlFor="complaint">Queja</label>
                         </div>
                     </div>
